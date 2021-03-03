@@ -1,0 +1,20 @@
+{
+  "name": "levelup-backend",
+  "version": "1.0.0",
+  "main": "src/ndex.js",
+  "author": "hongdotcom",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.11.18",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1"
+  }
+}
