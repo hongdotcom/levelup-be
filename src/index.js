@@ -10,15 +10,20 @@ dotenv.config();
 const app = express();
 //connect DB by env variable
 mongoose.connect(
-  `${process.env.START_MONGODB}${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}${process.env.MONGODB_END}`,
+  `${process.env.MONGODB_URI}`,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
-    console.log(
-      "Connected Mongo DB  " +
-        `${process.env.START_MONGODB}${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}${process.env.MONGODB_END}`
-    );
-  }
+  () => {}
 );
+console.log(mongoose.connection.readyState);
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("Successfully Connected");
+  console.log(mongoose.connection.readyState);
+});
+connection.on("error", (err) => {
+  console.log("Cannot connect because " + err);
+  console.log(mongoose.connection.readyState);
+});
 //middleware setup
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:3000", credential: true }));
