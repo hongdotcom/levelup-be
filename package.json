@@ -5,7 +5,8 @@
   "author": "hongdotcom",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
