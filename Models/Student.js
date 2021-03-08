@@ -23,23 +23,56 @@ const StudentSchema = mongoose.Schema({
   class_taken: {
     type: [
       {
-        // schedule: ObjectId,
-        // booking_id: ObjectId,
         class_date: Date,
+        location: String,
         attendance: Number,
+        update_date: {
+          type: Date,
+          default: Date.now(),
+          required: true,
+        },
       },
     ],
   },
-  // checkpoint_earn: { type: Array, default: [] },
-  checkpoint_earn: [{}],
-
+  checkpoint_earn: {
+    type: [
+      {
+        checkpoint_name: String,
+        update_date: {
+          type: Date,
+          default: Date.now(),
+          required: true,
+        },
+        level: Number,
+        comment: String,
+      },
+    ],
+  },
   skill_learn: {
     type: [
       {
         skill_name: String,
-        learn_date: Date,
+        update_date: {
+          type: Date,
+          default: Date.now(),
+          required: true,
+        },
         level: Number,
         comment: String,
+      },
+    ],
+  },
+  quiz_result: {
+    type: [
+      {
+        quiz_date: Date,
+        level: Number,
+        comment: String,
+        update_date: {
+          type: Date,
+          default: Date.now(),
+          required: true,
+        },
       },
     ],
   },

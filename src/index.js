@@ -19,16 +19,15 @@ mongoose.connect(
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Successfully Connected");
-  console.log(mongoose.connection.readyState);
+  // console.log(mongoose.connection.readyState);
 });
 connection.on("error", (err) => {
   console.log("Cannot connect because " + err);
-  console.log(mongoose.connection.readyState);
+  // console.log(mongoose.connection.readyState);
 });
 
 //Other middleware setup
 app.use(express.json());
-// app.use(express.urlencoded());
 app.use(cors({ origin: "http://localhost:3000", credential: true }));
 app.use(
   session({

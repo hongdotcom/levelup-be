@@ -50,7 +50,6 @@ router.get("/id/:studentid", async (req, res) => {
     res.json({ message: err });
   }
 });
-
 // Delete student
 router.delete("/:studentid", async (req, res) => {
   try {
@@ -62,8 +61,7 @@ router.delete("/:studentid", async (req, res) => {
     res.json({ message: err });
   }
 });
-
-//Update student
+//Update student basic info
 router.patch("/:studentid", async (req, res) => {
   try {
     const updatedStudent = await Student.updateOne(
@@ -93,7 +91,7 @@ router.patch("/insertstucheckpoint/:studentid", async (req, res) => {
       {
         $push: {
           checkpoint_earn: {
-            project: req.body.checkpoint_earn.project,
+            checkpoint_name: req.body.checkpoint_earn.checkpoint_name,
             earn_date: req.body.checkpoint_earn.earn_date,
             level: req.body.checkpoint_earn.level,
             comment: req.body.checkpoint_earn.comment,
@@ -110,11 +108,12 @@ router.patch("/insertstucheckpoint/:studentid", async (req, res) => {
     // });
     // const insertedCheckpoint = await student.save();
 
-    res.json(req.body);
+    res.json(insertedCheckpoint);
   } catch (err) {
     res.json({ message: err });
   }
 });
+//delete checkpoint for student
 router.delete("/removestucheckpoint/:studentid", async (req, res) => {
   const student = await Student.updateOne(
     {
@@ -124,9 +123,19 @@ router.delete("/removestucheckpoint/:studentid", async (req, res) => {
   );
   res.json(student);
 });
+//show all checkpoint
 router.get("/findcheckpoint/:studentid", async (req, res) => {
   const student = await Student.findById(req.params.studentid);
   res.json(student.checkpoint_earn);
+});
+//find last checkpoint
+router.get("/lastcheckpoint/:studentid", async (req, res) => {
+  const student = await Student.findById(req.params.studentid);
+  const checkpoint = student.checkpoint_earn;
+  checkpoint.sort(function compare(a, b) {
+    return new Date(b.update_date) - new Date(a.update_date);
+  });
+  res.json(checkpoint[0]);
 });
 
 module.exports = router;

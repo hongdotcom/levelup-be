@@ -10,9 +10,8 @@ const CourseSchema = mongoose.Schema({
   schedule: {
     type: [
       {
-        // schedule_id: ObjectId,
         class_date: Date,
-        Location: String,
+        location: String,
       },
     ],
   },
