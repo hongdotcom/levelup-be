@@ -21,8 +21,8 @@ const CaretakerSchema = mongoose.Schema({
     type: [
       {
         credit_purchased: Number,
-        nzd_total: Decimal128,
-        payment_status: Int32,
+        nzd_total: Number,
+        payment_status: Number,
       },
     ],
   },

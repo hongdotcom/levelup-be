@@ -30,11 +30,14 @@ const StudentSchema = mongoose.Schema({
       },
     ],
   },
-  checkpoint_earn: {
+  // checkpoint_earn: { type: Array, default: [] },
+  checkpoint_earn: [{}],
+
+  skill_learn: {
     type: [
       {
-        // checkpoint_id: ObjectId,
-        earn_date: Date,
+        skill_name: String,
+        learn_date: Date,
         level: Number,
         comment: String,
       },

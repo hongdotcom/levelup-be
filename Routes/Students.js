@@ -85,4 +85,48 @@ router.patch("/:studentid", async (req, res) => {
     res.json({ message: err });
   }
 });
+//insert checkpoint for student
+router.patch("/insertstucheckpoint/:studentid", async (req, res) => {
+  try {
+    const insertedCheckpoint = await Student.updateOne(
+      { _id: req.params.studentid },
+      {
+        $push: {
+          checkpoint_earn: {
+            project: req.body.checkpoint_earn.project,
+            earn_date: req.body.checkpoint_earn.earn_date,
+            level: req.body.checkpoint_earn.level,
+            comment: req.body.checkpoint_earn.comment,
+          },
+        },
+      }
+    );
+    // const student = await Student.findById(req.params.studentid);
+    // student.checkpoint_earn.push({
+    //   project: req.body.checkpoint_earn.project,
+    //   earn_date: req.body.checkpoint_earn.earn_date,
+    //   level: req.body.checkpoint_earn.level,
+    //   comment: req.body.checkpoint_earn.comment,
+    // });
+    // const insertedCheckpoint = await student.save();
+
+    res.json(req.body);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+router.delete("/removestucheckpoint/:studentid", async (req, res) => {
+  const student = await Student.updateOne(
+    {
+      _id: req.params.studentid,
+    },
+    { $pull: { checkpoint_earn: { _id: "6045513ece742a8b7d2116f1" } } }
+  );
+  res.json(student);
+});
+router.get("/findcheckpoint/:studentid", async (req, res) => {
+  const student = await Student.findById(req.params.studentid);
+  res.json(student.checkpoint_earn);
+});
+
 module.exports = router;

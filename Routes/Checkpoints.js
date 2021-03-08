@@ -62,7 +62,7 @@ router.delete("/:checkpointid", async (req, res) => {
 //Update course
 router.patch("/:checkpointid", async (req, res) => {
   try {
-    const updatedCheckpoint = await Course.updateOne(
+    const updatedCheckpoint = await Checkpoint.updateOne(
       { _id: req.params.checkpointid },
       {
         $set: {
@@ -72,7 +72,7 @@ router.patch("/:checkpointid", async (req, res) => {
         },
       }
     );
-    res.json(updatedCheeckpoint);
+    res.json(updatedCheckpoint);
   } catch (err) {
     res.json({ message: err });
   }

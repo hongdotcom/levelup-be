@@ -45,12 +45,16 @@ const teacherRoute = require("../Routes/Teachers");
 const studentRoute = require("../Routes/Students");
 const courseRoute = require("../Routes/Courses");
 const loginRoute = require("../Routes/Logins");
+const checkpointRoute = require("../Routes/Checkpoints");
+const caretakerRoute = require("../Routes/Caretakers");
 
 // //Use Route as middleware
 app.use("/teachers/", teacherRoute);
 app.use("/students/", studentRoute);
 app.use("/courses/", courseRoute);
 app.use("/logins/", loginRoute);
+app.use("/checkpoints/", checkpointRoute);
+app.use("/caretaker", caretakerRoute);
 //root route register
 app.get("/", (req, res) => {
   res.send("This is Levelup");
