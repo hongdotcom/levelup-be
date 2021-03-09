@@ -92,6 +92,7 @@ router.patch("/insertstucheckpoint/:studentid", async (req, res) => {
         $push: {
           checkpoint_earn: {
             checkpoint_name: req.body.checkpoint_earn.checkpoint_name,
+            percentage_completed: req.body.checkpoint_earn.percentage_completed,
             earn_date: req.body.checkpoint_earn.earn_date,
             level: req.body.checkpoint_earn.level,
             comment: req.body.checkpoint_earn.comment,
@@ -137,5 +138,73 @@ router.get("/lastcheckpoint/:studentid", async (req, res) => {
   });
   res.json(checkpoint[0]);
 });
+//get list of student in a class
+router.get("/classstudent/:classid", async (req, res) => {
+  // const student = await Student.find({
+  //   schedule: { $elemMatch: { class_id: req.params.classid } },
+  // });
+  const student = await Student.find();
+  const classStudent = [];
+  student.forEach(function (stud) {
+    stud.class_taken.forEach(function (item) {
+      console.log(item);
+      console.log(item.class_id);
+      // console.log(req.params.classid);
+      if (item.class_id == req.params.classid) {
+        console.log("push");
+        classStudent.push(stud);
+      }
+    });
+  });
 
+  res.json(classStudent);
+});
+//add classtake to student
+router.patch("/insertclasstake/:studentid", async (req, res) => {
+  try {
+    const insertedClass = await Student.updateOne(
+      { _id: req.params.studentid },
+      {
+        $push: {
+          class_taken: {
+            class_id: req.body.class_taken.class_id,
+            class_date: req.body.class_taken.class_date,
+            location: req.body.class_taken.location,
+            attendance: req.body.class_taken.attendance,
+          },
+        },
+      }
+    );
+    console.log(insertedClass);
+    res.json(insertedClass);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+//add skill to student
+router.patch("/insertskill/:studentid", async (req, res) => {
+  try {
+    const insertedSkill = await Student.updateOne(
+      { _id: req.params.studentid },
+      {
+        $push: {
+          skill_learn: {
+            skill_name: req.body.skill_learn.skill_name,
+            level: req.body.skill_learn.level,
+            comment: req.body.skill_learn.comment,
+          },
+        },
+      }
+    );
+    console.log(insertedSkill);
+    res.json(insertedSkill);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+//show all skill
+router.get("/findskill/:studentid", async (req, res) => {
+  const student = await Student.findById(req.params.studentid);
+  res.json(student.skill_learn);
+});
 module.exports = router;

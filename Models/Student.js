@@ -23,6 +23,7 @@ const StudentSchema = mongoose.Schema({
   class_taken: {
     type: [
       {
+        class_id: String,
         class_date: Date,
         location: String,
         attendance: Number,
@@ -43,6 +44,7 @@ const StudentSchema = mongoose.Schema({
           default: Date.now(),
           required: true,
         },
+        percentage_completed: Number,
         level: Number,
         comment: String,
       },

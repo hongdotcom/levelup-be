@@ -96,7 +96,7 @@ router.patch("/insertschedule/:courseid", async (req, res) => {
 });
 //Get current month schedule
 router.get("/currentschedule/:mth", async (req, res) => {
-  const course1 = await Course.findById("604340606ff0fb11bcd77ed6");
+  // const course1 = await Course.findById("604340606ff0fb11bcd77ed6");
   const course = await Course.find();
   const schedule = [];
   console.log(Array.isArray(course1.schedule));
