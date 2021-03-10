@@ -1,7 +1,7 @@
 const express = require("express");
 const Login = require("../Models/Login");
 const router = express.Router();
-
+const bcrypt = require("bcryptjs");
 // Get login list
 router.get("/", async (req, res) => {
   try {
@@ -14,10 +14,12 @@ router.get("/", async (req, res) => {
 // Add login
 router.post("/", async (req, res) => {
   console.log(req.body);
+  //hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(req.body.hashPassword, salt);
   const login = new Login({
-    username: req.body.username,
     email: req.body.email,
-    hashPassword: req.body.hashPassword,
+    hashPassword: hashPassword,
     role_id: req.body.role_id,
     related_id: req.body.related_id,
   });
@@ -27,6 +29,15 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
+});
+//process login
+router.post("/proceed", async (req, res) => {
+  console.log(req.body);
+  const user = await Login.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send("Login or Password is incorrect!");
+  const authUser = await bcrypt.compare(req.body.password, user.hashPassword);
+  if (!authUser) return res.status(400).send("Login or Password is incorrect!");
+  res.json("loggedIn");
 });
 // Get login by name
 router.get("/:name", async (req, res) => {

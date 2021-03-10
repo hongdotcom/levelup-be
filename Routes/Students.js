@@ -205,6 +205,10 @@ router.patch("/insertskill/:studentid", async (req, res) => {
 //show all skill
 router.get("/findskill/:studentid", async (req, res) => {
   const student = await Student.findById(req.params.studentid);
-  res.json(student.skill_learn);
+  const skill = student.skill_learn;
+  skill.sort(function compare(a, b) {
+    return new Date(b.update_date) - new Date(a.update_date);
+  });
+  res.json(skill);
 });
 module.exports = router;
