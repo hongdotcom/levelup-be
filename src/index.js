@@ -28,7 +28,7 @@ connection.on("error", (err) => {
 
 //Other middleware setup
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credential: true }));
+app.use(cors());
 app.use(
   session({
     secret: "secret",
@@ -59,6 +59,6 @@ app.get("/", (req, res) => {
   res.send("This is Levelup");
 });
 
-app.listen(4000, () => {
-  console.log("Levelup Listening");
+app.listen(4000, "0.0.0.0", () => {
+  console.log("Levelup Listening 4000");
 });
