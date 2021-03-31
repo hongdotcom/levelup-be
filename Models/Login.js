@@ -1,9 +1,24 @@
 const mongoose = require("mongoose");
 
 const LoginSchema = mongoose.Schema({
-  email: {
+  googleId: {
+    type: String,
+  },
+  twitterId: {
+    type: String,
+  },
+  githubId: {
+    type: String,
+  },
+  facebookId: {
+    type: String,
+  },
+  username: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
   },
   hashPassword: {
     type: String,
